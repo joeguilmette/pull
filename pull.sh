@@ -13,12 +13,12 @@ plugin_slugs=(
 	)
 
 # an array of paths to the local dev installs you use (with trailing slashes)
-# this is how mine look for VVV.
+# this is how mine look for VVV. note that you need to use $HOME rather than ~.
 local_installs=(
-	"~/Code/dev/www/add-ons/wp-core/wp-content/plugins/"
-	"~/Code/dev/www/wpae/wp-core/wp-content/plugins/"
-	"~/Code/dev/www/wpai/wp-core/wp-content/plugins/"
-	"~/Code/dev/www/wooco/wp-core/wp-content/plugins/"
+	"$HOME/Code/dev/www/add-ons/wp-core/wp-content/plugins/"
+	"$HOME/Code/dev/www/wpae/wp-core/wp-content/plugins/"
+	"$HOME/Code/dev/www/wpai/wp-core/wp-content/plugins/"
+	"$HOME/Code/dev/www/wooco/wp-core/wp-content/plugins/"
 	)
 
 # the directory where you store your git repos. the script will add a directory
