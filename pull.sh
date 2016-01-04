@@ -95,7 +95,7 @@ do
 	echo ''
 	# end formatting bullshit
 
-	# this is fun, here's we're digging into the plugin itself to get the version
+	# this is fun, here we dig into the plugin itself to get the version
 	# number so that we can add it to the zip's file name
 	v=`sed -n 's/Version: //p' $git_folder$plugin_slug/$plugin_slug.php`
 	
