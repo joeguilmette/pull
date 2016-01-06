@@ -1,6 +1,6 @@
 #!/bin/bash
-#
-## ==============================
+
+# ===============================
 # ===== Begin Customization =====
 # ===============================
 
@@ -12,7 +12,7 @@ plugin_slugs=(
 	"wp-all-import-pro"
 	)
 
-# an array of paths to the local dev installs you use (with trailing slashes)
+# an array of paths to the local dev installs you use (with trailing slashes).
 # this is how mine look for VVV. note that you need to use $HOME rather than ~.
 local_installs=(
 	"$HOME/Code/dev/www/add-ons/wp-core/wp-content/plugins/"
@@ -22,7 +22,7 @@ local_installs=(
 	)
 
 # the directory where you store your git repos. the script will add a directory
-# called = Master = and dump zips in there. it'll also keep directories of all the
+# called `= Master =` and dump zips in there. it'll also keep directories of all the
 # plugins listed above up to date.
 git_folder=~/git/
 
@@ -30,13 +30,14 @@ git_folder=~/git/
 # ====== End Customization ======
 # ===============================
 
-# we'll start in your git folder
-cd $git_folder
-
-# let's remember where you were when you started
+# now the fun begins
+# let's remember where you were when you ran this script
 pwd=`pwd`
 
-# and give some breathing room in the terminanal
+# now we'll go to your git folder
+cd $git_folder
+
+# and give some breathing room in the terminal
 echo ''
 
 # for each plugin slug
@@ -65,21 +66,21 @@ do
 	# navigate to the plugin directory where you store all your git repos
 	cd "$git_folder$plugin_slug"
 
-	# the magic
+	# magic
 	git pull
 
-	# now we're going to move this plugin to each different local installs
+	# now we're going to move this plugin to each of your local installs
 	for local_install in "${local_installs[@]}"
 	do
 		# delete the plugin from wp-content/plugins
-	    rm -rf $local_install$plugin_slug
-	    # copy the latest from your local git repos
+		rm -rf $local_install$plugin_slug
+		# copy the latest from your local git repos
 		cp -a $git_folder$plugin_slug/ $local_install$plugin_slug/
 	done
 		
 	# begin formatting bullshit
-	# this one is so that the 'Zipping' display is equal in length
-	# to the earlier one with the plugin slug
+	# we want the 'Zipping' display block equal in length
+	# to the earlier display block with the plugin slug
 	len=${#plugin_slug}
 	len=$((len + 5))
 	len=$((len / 2))
@@ -99,13 +100,13 @@ do
 	# number so that we can add it to the zip's file name
 	v=`sed -n 's/Version: //p' $git_folder$plugin_slug/$plugin_slug.php`
 	
-	# here we remove the other zip archives for this plugin in the `= Master =` folder
+	# now we need to remove the other zip archives for this plugin in the `= Master =` folder
 	find $git_folder\=\ Master\ \=/ -type f -name "$plugin_slug*.zip" -exec rm -f {} \;
 
-	# here's where we actually make the zip (without the hidden folders), using
-	# the version number in the file name
+	# finally we'll actually make the zip (without the hidden folders), adding
+	# the version number to the file name
 	zip -rq $git_folder/\=\ Master\ \=/$plugin_slug\_${v// /_}.zip * -x '*/\.*'
 done
 
-# go back to wherever you were
+# and to be polite, we'll go back to wherever you were when you started
 cd $pwd
