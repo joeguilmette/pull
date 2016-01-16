@@ -10,6 +10,8 @@ plugin_slugs=(
 	"wpai-woocommerce-add-on"
 	"wp-all-export-pro"
 	"wp-all-import-pro"
+	"wp-all-import"
+	"wp-all-export"
 	)
 
 # an array of paths to the local dev installs you use (with trailing slashes).
