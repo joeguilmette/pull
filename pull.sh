@@ -100,10 +100,16 @@ do
 
 	# this is fun, here we dig into the plugin itself to get the version
 	# number so that we can add it to the zip's file name
-	v=`sed -n 's/Version: //p' $git_folder$plugin_slug/$plugin_slug.php`
-	
+	if [ ! -f $git_folder$plugin_slug/$plugin_slug.php ]
+	then
+    	v=`sed -n 's/Version: //p' $git_folder$plugin_slug/plugin.php`
+	else
+		v=`sed -n 's/Version: //p' $git_folder$plugin_slug/$plugin_slug.php`
+	fi
+
+
 	# now we need to remove the other zip archives for this plugin in the `= Master =` folder
-	find $git_folder\=\ Master\ \=/ -type f -name "$plugin_slug*.zip" -exec rm -f {} \;
+	find $git_folder\=\ Master\ \=/ -type f -name "$plugin_slug*_.zip" -exec rm -f {} \;
 
 	# finally we'll actually make the zip (without the hidden folders), adding
 	# the version number to the file name
