@@ -109,11 +109,12 @@ do
 
 
 	# now we need to remove the other zip archives for this plugin in the `= Master =` folder
-	find $git_folder\=\ Master\ \=/ -type f -name "$plugin_slug*_.zip" -exec rm -f {} \;
+	find $git_folder\=\ Master\ \=/ -type f -name "${plugin_slug}_*.zip" -exec rm -f {} \;
 
 	# finally we'll actually make the zip (without the hidden folders), adding
 	# the version number to the file name
-	zip -rq $git_folder/\=\ Master\ \=/$plugin_slug\_${v// /_}.zip * -x '*/\.*'
+	zip -rqD $git_folder/\=\ Master\ \=/$plugin_slug.zip * -x '*/\.*'
+	mv $git_folder/\=\ Master\ \=/$plugin_slug.zip $git_folder/\=\ Master\ \=/$plugin_slug\_${v// /_}.zip
 done
 
 # and to be polite, we'll go back to wherever you were when you started
