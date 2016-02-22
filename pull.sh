@@ -23,9 +23,9 @@ local_installs=(
 	"$HOME/Code/dev/www/wooco/wp-core/wp-content/plugins/"
 	)
 
-# the directory where you store your git repos. the script will add a directory
-# called `= Master =` and dump zips in there. it'll also keep directories of all the
-# plugins listed above up to date.
+# the directory where you store your git repos. you'll need to add a directory
+# called `= Master =` so the script can dump zips in there. 
+# it'll also keep directories of all the plugins listed above up to date.
 git_folder=~/git/
 
 # ===============================
