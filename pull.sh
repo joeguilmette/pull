@@ -113,7 +113,8 @@ do
 
 	# finally we'll actually make the zip (without the hidden folders), adding
 	# the version number to the file name
-	zip -rqD $git_folder/\=\ Master\ \=/$plugin_slug.zip * -x '*/\.*'
+	cd ..
+	zip -rqD $git_folder/\=\ Master\ \=/$plugin_slug.zip $plugin_slug -x '*/\.*'
 	mv $git_folder/\=\ Master\ \=/$plugin_slug.zip $git_folder/\=\ Master\ \=/$plugin_slug\_${v// /_}.zip
 done
 
