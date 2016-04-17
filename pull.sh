@@ -28,6 +28,9 @@ local_installs=(
 # it'll also keep directories of all the plugins listed above up to date.
 git_folder=~/git/
 
+# this works the same as the git folder.
+dropbox_folder=~/Dropbox/
+
 # ===============================
 # ====== End Customization ======
 # ===============================
@@ -117,6 +120,15 @@ do
 	zip -rqD $git_folder/\=\ Master\ \=/$plugin_slug.zip $plugin_slug -x '*/\.*'
 	mv $git_folder/\=\ Master\ \=/$plugin_slug.zip $git_folder/\=\ Master\ \=/$plugin_slug\_${v// /_}.zip
 done
+
+# dump everything into Dropbox
+
+echo '==========================='
+echo '==== Adding to Dropbox ===='
+echo '==========================='
+
+rm -rf $dropbox_folder/\=\ Master\ \=/*
+cp $git_folder/\=\ Master\ \=/* $dropbox_folder/\=\ Master\ \=/
 
 # and to be polite, we'll go back to wherever you were when you started
 cd $pwd
