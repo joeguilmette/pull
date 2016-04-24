@@ -12,10 +12,11 @@ plugin_slugs=(
 	"wp-all-import-pro"
 	"wp-all-import"
 	"wp-all-export"
+	"wpai-acf-add-on"
 	)
 
 # an array of paths to the local dev installs you use (with trailing slashes).
-# this is how mine look for VVV. note that you need to use $HOME rather than ~.
+# this is how mine looks for VVV. note that you need to use $HOME rather than ~.
 local_installs=(
 	"$HOME/Code/dev/www/add-ons/wp-core/wp-content/plugins/"
 	"$HOME/Code/dev/www/wpae/wp-core/wp-content/plugins/"
