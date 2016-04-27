@@ -13,6 +13,7 @@ plugin_slugs=(
 	"wp-all-import"
 	"wp-all-export"
 	"wpai-acf-add-on"
+	"wpai-user-add-on"
 	)
 
 # an array of paths to the local dev installs you use (with trailing slashes).
