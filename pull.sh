@@ -14,24 +14,23 @@ plugin_slugs=(
 	"wp-all-export"
 	"wpai-acf-add-on"
 	"wpai-user-add-on"
+	"woocommerce-xml-csv-product-import"
 	)
 
 # an array of paths to the local dev installs you use (with trailing slashes).
 # this is how mine looks for VVV. note that you need to use $HOME rather than ~.
 local_installs=(
-	"$HOME/Code/dev/www/add-ons/wp-core/wp-content/plugins/"
-	"$HOME/Code/dev/www/wpae/wp-core/wp-content/plugins/"
-	"$HOME/Code/dev/www/wpai/wp-core/wp-content/plugins/"
-	"$HOME/Code/dev/www/wooco/wp-core/wp-content/plugins/"
+	"/Applications/MAMP/htdocs/wpai.dev/wp-content/plugins/"
+	# "$HOME/Dev/Sites/wpae/app/public/wp-content/plugins/"
 	)
 
 # the directory where you store your git repos. you'll need to add a directory
 # called `= Master =` so the script can dump zips in there. 
 # it'll also keep directories of all the plugins listed above up to date.
-git_folder=~/git/
+git_folder=~/Dropbox/Dev/git/
 
 # this works the same as the git folder.
-dropbox_folder=~/Dropbox/
+# dropbox_folder=~/Dropbox/
 
 # ===============================
 # ====== End Customization ======
@@ -40,6 +39,9 @@ dropbox_folder=~/Dropbox/
 # now the fun begins
 # let's remember where you were when you ran this script
 pwd=`pwd`
+
+# create a git folder if it doesn't exist
+mkdir -p "$git_folder"
 
 # now we'll go to your git folder
 cd $git_folder
@@ -70,11 +72,20 @@ do
 	echo $eqs
 	# end formatting bullshit
 
+	# clone the plugin if it doesn't exist
+	if [ ! -d "$git_folder$plugin_slug" ]; then
+	  # no git repo
+	  git clone git@github.com:soflyy/"$plugin_slug".git
+	fi
+
+	# check if the plugin exists in your git repo
 	# navigate to the plugin directory where you store all your git repos
 	cd "$git_folder$plugin_slug"
 
 	# magic
-	git pull
+	git branch
+	echo ""
+	git pull --all
 
 	# now we're going to move this plugin to each of your local installs
 	for local_install in "${local_installs[@]}"
@@ -125,12 +136,12 @@ done
 
 # dump everything into Dropbox
 
-echo '==========================='
-echo '==== Adding to Dropbox ===='
-echo '==========================='
+# echo '==========================='
+# echo '==== Adding to Dropbox ===='
+# echo '==========================='
 
-rm -rf $dropbox_folder/\=\ Master\ \=/*
-cp $git_folder/\=\ Master\ \=/* $dropbox_folder/\=\ Master\ \=/
+# rm -rf $dropbox_folder/\=\ Master\ \=/*
+# cp $git_folder/\=\ Master\ \=/* $dropbox_folder/\=\ Master\ \=/
 
 # and to be polite, we'll go back to wherever you were when you started
 cd $pwd
