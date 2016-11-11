@@ -123,6 +123,8 @@ do
 		v=`sed -n 's/Version: //p' $git_folder$plugin_slug/$plugin_slug.php`
 	fi
 
+	# create a git folder if it doesn't exist
+	mkdir -p "$git_folder"\=\ Master\ \=/
 
 	# now we need to remove the other zip archives for this plugin in the `= Master =` folder
 	find $git_folder\=\ Master\ \=/ -type f -name "${plugin_slug}_*.zip" -exec rm -f {} \;
