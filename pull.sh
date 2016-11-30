@@ -20,7 +20,7 @@ plugin_slugs=(
 # an array of paths to the local dev installs you use (with trailing slashes).
 # this is how mine looks for VVV. note that you need to use $HOME rather than ~.
 local_installs=(
-	"/Applications/MAMP/htdocs/wpai.dev/wp-content/plugins/"
+	"/Users/joe/Documents/MAMP PRO/sites/wpai/wp-content/plugins/"
 	# "$HOME/Dev/Sites/wpae/app/public/wp-content/plugins/"
 	)
 
@@ -90,7 +90,7 @@ do
 		# delete the plugin from wp-content/plugins
 		rm -rf $local_install$plugin_slug
 		# copy the latest from your local git repos
-		cp -a $git_folder$plugin_slug/ $local_install$plugin_slug/
+		cp -a "$git_folder""$plugin_slug"/ "$local_install""$plugin_slug/"
 	done
 		
 	# begin formatting bullshit
