@@ -44,7 +44,7 @@ mkdir -p "$git_folder"
 cd $git_folder
 
 # and this is a thing we do now
-chmod -R 0755 .
+# chmod -R 0755 .
 
 # and give some breathing room in the terminal
 echo ''
@@ -90,10 +90,12 @@ do
 	# now we're going to move this plugin to each of your local installs
 	for local_install in "${local_installs[@]}"
 	do
+		# more things we do now
+		# chmod -R 0755 "$local_install""$plugin_slug"/
 		# delete the plugin from wp-content/plugins
-		rm -rf $local_install$plugin_slug
+		rm -rf "$local_install""$plugin_slug"
 		# copy the latest from your local git repos
-		cp -a "$git_folder""$plugin_slug"/ "$local_install""$plugin_slug/"
+		cp -a "$git_folder""$plugin_slug"/ "$local_install""$plugin_slug"/
 	done
 		
 	# begin formatting bullshit
