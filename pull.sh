@@ -43,6 +43,9 @@ mkdir -p "$git_folder"
 # now we'll go to your git folder
 cd $git_folder
 
+# and this is a thing we do now
+chmod -R 0755 .
+
 # and give some breathing room in the terminal
 echo ''
 
