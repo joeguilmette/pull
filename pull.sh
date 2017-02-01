@@ -21,6 +21,7 @@ plugin_slugs=(
 # this is how mine looks for VVV. note that you need to use $HOME rather than ~.
 local_installs=(
 	"/Users/joe/Documents/MAMP PRO/sites/wpai/wp-content/plugins/"
+	"/Users/joe/Documents/MAMP PRO/sites/wooco/wp-content/plugins/"
 	# "$HOME/Dev/Sites/wpae/app/public/wp-content/plugins/"
 	)
 
