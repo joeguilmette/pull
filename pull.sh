@@ -15,6 +15,7 @@ plugin_slugs=(
 	"wpai-acf-add-on"
 	"wpai-user-add-on"
 	"woocommerce-xml-csv-product-import"
+	"wpai-linkcloak-add-on"
 	)
 
 # an array of paths to the local dev installs you use (with trailing slashes).
@@ -131,12 +132,23 @@ do
 
 	# now we need to remove the other zip archives for this plugin in the `= Master =` folder
 	find $git_folder\=\ Master\ \=/ -type f -name "${plugin_slug}_*.zip" -exec rm -f {} \;
+	cd ..
+
+	# now let's temporarily hide the /tests folder (it gets huge)
+	if [ -d "$plugin_slug/tests/" ]; then
+	  mv $plugin_slug/tests $plugin_slug/.tests
+	fi
 
 	# finally we'll actually make the zip (without the hidden folders), adding
 	# the version number to the file name
-	cd ..
+
 	zip -rqD $git_folder/\=\ Master\ \=/$plugin_slug.zip $plugin_slug -x '*/\.*'
 	mv $git_folder/\=\ Master\ \=/$plugin_slug.zip $git_folder/\=\ Master\ \=/$plugin_slug\_${v// /_}.zip
+
+	# and now let's uhide the /tests folder
+	if [ -d "$plugin_slug/.tests/" ]; then
+	  mv $plugin_slug/.tests $plugin_slug/tests
+	fi
 done
 
 # and to be polite, we'll go back to wherever you were when you started
