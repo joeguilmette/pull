@@ -39,6 +39,18 @@ git_folder=~/Dropbox/Dev/git/
 # let's remember where you were when you ran this script
 pwd=`pwd`
 
+# loop through all the slugs
+for slug in "${plugin_slugs[@]}"
+do
+	# check if the current directory matches a slug
+	if [[ "${PWD##*/}" == $slug ]]; then
+		# if it does, only update that slug
+		unset plugin_slugs
+		plugin_slugs=$slug
+	fi
+done
+
+
 # create a git folder if it doesn't exist
 mkdir -p "$git_folder"
 
