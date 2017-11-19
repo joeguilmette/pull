@@ -19,14 +19,14 @@ plugin_slugs=(
 	)
 
 # an array of paths to the local dev installs you use (with trailing slashes).
-# this is how mine looks for VVV. note that you need to use $HOME rather than ~.
+# note that for VVV you need to use $HOME rather than ~.
 local_installs=(
 	"/Users/joe/Documents/MAMP PRO/sites/wpai/wp-content/plugins/"
 	"/Users/joe/Documents/MAMP PRO/sites/wooco/wp-content/plugins/"
 	# "$HOME/Dev/Sites/wpae/app/public/wp-content/plugins/"
 	)
 
-# the directory where you store your git repos. you'll need to add a directory
+# the directory where you store your git repos. the script will add a directory
 # called `= Master =` so the script can dump zips in there. 
 # it'll also keep directories of all the plugins listed above up to date.
 git_folder=~/Dropbox/Dev/git/
@@ -93,7 +93,10 @@ do
 	fi
 
 	# check if the plugin exists in your git repo
-	# navigate to the plugin directory where you store all your git repos
+	# create a folder if it doesn't
+	mkdir -p "$git_folder$plugin_slug"
+
+	# navigate to the plugin directory where this plugin is
 	cd "$git_folder$plugin_slug"
 
 	# magic
