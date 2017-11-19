@@ -18,6 +18,9 @@ plugin_slugs=(
 	"wpai-linkcloak-add-on"
 	)
 
+# the user or org username used to run remote git commands.
+github_user=git@github.com:soflyy
+
 # an array of paths to the local dev installs you use (with trailing slashes).
 # note that for VVV you need to use $HOME rather than ~.
 local_installs=(
@@ -89,7 +92,7 @@ do
 	# clone the plugin if it doesn't exist
 	if [ ! -d "$git_folder$plugin_slug" ]; then
 	  # no git repo
-	  git clone git@github.com:soflyy/"$plugin_slug".git
+	  git clone "github_user"/"$plugin_slug".git
 	fi
 
 	# check if the plugin exists in your git repo
