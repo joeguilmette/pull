@@ -92,7 +92,7 @@ do
 	# clone the plugin if it doesn't exist
 	if [ ! -d "$git_folder$plugin_slug" ]; then
 	  # no git repo
-	  git clone "github_user"/"$plugin_slug".git
+	  git clone "github_user$plugin_slug".git
 	fi
 
 	# check if the plugin exists in your git repo
