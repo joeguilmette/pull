@@ -107,6 +107,8 @@ do
 	echo ""
 	git pull --all
 
+	branch=`git symbolic-ref --short -q HEAD`
+
 	# now we're going to move this plugin to each of your local installs
 	for local_install in "${local_installs[@]}"
 	do
@@ -161,7 +163,7 @@ do
 	# the version number to the file name
 
 	zip -rqD $git_folder/\=\ Master\ \=/$plugin_slug.zip $plugin_slug -x '*/\.*'
-	mv $git_folder/\=\ Master\ \=/$plugin_slug.zip $git_folder/\=\ Master\ \=/$plugin_slug\_${v// /_}.zip
+	mv $git_folder/\=\ Master\ \=/$plugin_slug.zip $git_folder/\=\ Master\ \=/$plugin_slug\_${v// /_}\-\[$branch\].zip
 
 	# and now let's uhide the /tests folder
 	if [ -d "$plugin_slug/.tests/" ]; then
