@@ -7,15 +7,17 @@
 # an array of all the plugin slugs you want to pull.
 # first make sure you can `$ git pull` these plugins without issues.
 plugin_slugs=(
-	"wpai-woocommerce-add-on"
+	"wpai-toolset-types-addon"
 	"wp-all-export-pro"
 	"wp-all-import-pro"
 	"wp-all-import"
 	"wp-all-export"
+	"wpai-woocommerce-add-on"
 	"wpai-acf-add-on"
 	"wpai-user-add-on"
 	"woocommerce-xml-csv-product-import"
 	"wpai-linkcloak-add-on"
+	"sandbox"
 	)
 
 # the user or org username used to run remote git commands.
@@ -24,8 +26,8 @@ github_user=git@github.com:soflyy
 # an array of paths to the local dev installs you use (with trailing slashes).
 # note that for VVV you need to use $HOME rather than ~.
 local_installs=(
-	"/Users/joe/Documents/MAMP PRO/sites/wpai/wp-content/plugins/"
-	"/Users/joe/Documents/MAMP PRO/sites/wooco/wp-content/plugins/"
+	"/Users/joe/Documents/MAMP PRO/sites/wpai.local/app/public/wp-content/plugins/"
+	"/Users/joe/Documents/MAMP PRO/sites/wpai.test/wp-content/"
 	# "$HOME/Dev/Sites/wpae/app/public/wp-content/plugins/"
 	)
 
@@ -92,7 +94,7 @@ do
 	# clone the plugin if it doesn't exist
 	if [ ! -d "$git_folder$plugin_slug" ]; then
 	  # no git repo
-	  git clone "github_user$plugin_slug".git
+	  git clone "$github_user"/"$plugin_slug".git
 	fi
 
 	# check if the plugin exists in your git repo
@@ -140,11 +142,16 @@ do
 
 	# this is fun, here we dig into the plugin itself to get the version
 	# number so that we can add it to the zip's file name
-	if [ ! -f $git_folder$plugin_slug/$plugin_slug.php ]
-	then
-    	v=`sed -n 's/Version: //p' $git_folder$plugin_slug/plugin.php`
-	else
-		v=`sed -n 's/Version: //p' $git_folder$plugin_slug/$plugin_slug.php`
+	if [[ "$plugin_slug" == "wpai-toolset-types-addon" ]]
+		then 
+			v=`sed -n 's/Version: //p' $git_folder$plugin_slug/wpai-toolset-types-add-on.php`
+		else
+			if [ ! -f $git_folder$plugin_slug/$plugin_slug.php ]
+				then	
+					v=`sed -n 's/Version: //p' $git_folder$plugin_slug/plugin.php`
+				else
+					v=`sed -n 's/Version: //p' $git_folder$plugin_slug/$plugin_slug.php`
+			fi
 	fi
 
 	# create a git folder if it doesn't exist
