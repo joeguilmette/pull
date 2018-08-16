@@ -169,8 +169,8 @@ do
 	# finally we'll actually make the zip (without the hidden folders), adding
 	# the version number to the file name
 
-	zip -rqD $git_folder\=\ Master\ \=/$plugin_slug.zip $plugin_slug -x '*/\.*'
-	mv $git_folder\=\ Master\ \=/$plugin_slug.zip $git_folder\=\ Master\ \=/$plugin_slug\_${v// /_}\-\[$branch\].zip
+	zip -rqD $git_folder\=" Master "\=/$plugin_slug.zip $plugin_slug -x '*/\.*'
+	mv $git_folder\=" Master "\=/$plugin_slug.zip $git_folder\=" Master "\=/$plugin_slug\_${v// /_}\-\[$branch\].zip
 
 	# and now let's uhide the /tests folder
 	if [ -d "$plugin_slug/.tests/" ]; then
