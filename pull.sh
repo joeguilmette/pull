@@ -7,26 +7,31 @@
 # an array of all the plugin slugs you want to pull.
 # first make sure you can `$ git pull` these plugins without issues.
 plugin_slugs=(
-	"wpai-woocommerce-add-on"
+	"wpai-toolset-types-addon"
 	"wp-all-export-pro"
 	"wp-all-import-pro"
 	"wp-all-import"
 	"wp-all-export"
+	"wpai-woocommerce-add-on"
 	"wpai-acf-add-on"
 	"wpai-user-add-on"
 	"woocommerce-xml-csv-product-import"
 	"wpai-linkcloak-add-on"
+	"sandbox"
 	)
 
+# the user or org username used to run remote git commands.
+github_user=git@github.com:soflyy
+
 # an array of paths to the local dev installs you use (with trailing slashes).
-# this is how mine looks for VVV. note that you need to use $HOME rather than ~.
+# note that for VVV you need to use $HOME rather than ~.
 local_installs=(
-	"/Users/joe/Documents/MAMP PRO/sites/wpai/wp-content/plugins/"
-	"/Users/joe/Documents/MAMP PRO/sites/wooco/wp-content/plugins/"
+	"/Users/joe/Documents/MAMP PRO/sites/wpai.local/app/public/wp-content/plugins/"
+	"/Users/joe/Documents/MAMP PRO/sites/wpai.test/wp-content/"
 	# "$HOME/Dev/Sites/wpae/app/public/wp-content/plugins/"
 	)
 
-# the directory where you store your git repos. you'll need to add a directory
+# the directory where you store your git repos. the script will add a directory
 # called `= Master =` so the script can dump zips in there. 
 # it'll also keep directories of all the plugins listed above up to date.
 git_folder=~/Dropbox/Dev/git/
@@ -38,6 +43,18 @@ git_folder=~/Dropbox/Dev/git/
 # now the fun begins
 # let's remember where you were when you ran this script
 pwd=`pwd`
+
+# loop through all the slugs
+for slug in "${plugin_slugs[@]}"
+do
+	# check if the current directory matches a slug
+	if [[ "${PWD##*/}" == $slug ]]; then
+		# if it does, only update that slug
+		unset plugin_slugs
+		plugin_slugs=$slug
+	fi
+done
+
 
 # create a git folder if it doesn't exist
 mkdir -p "$git_folder"
@@ -77,17 +94,22 @@ do
 	# clone the plugin if it doesn't exist
 	if [ ! -d "$git_folder$plugin_slug" ]; then
 	  # no git repo
-	  git clone git@github.com:soflyy/"$plugin_slug".git
+	  git clone "$github_user"/"$plugin_slug".git
 	fi
 
 	# check if the plugin exists in your git repo
-	# navigate to the plugin directory where you store all your git repos
+	# create a folder if it doesn't
+	mkdir -p "$git_folder$plugin_slug"
+
+	# navigate to the plugin directory where this plugin is
 	cd "$git_folder$plugin_slug"
 
 	# magic
 	git branch
 	echo ""
 	git pull --all
+
+	branch=`git symbolic-ref --short -q HEAD`
 
 	# now we're going to move this plugin to each of your local installs
 	for local_install in "${local_installs[@]}"
@@ -120,11 +142,16 @@ do
 
 	# this is fun, here we dig into the plugin itself to get the version
 	# number so that we can add it to the zip's file name
-	if [ ! -f $git_folder$plugin_slug/$plugin_slug.php ]
-	then
-    	v=`sed -n 's/Version: //p' $git_folder$plugin_slug/plugin.php`
-	else
-		v=`sed -n 's/Version: //p' $git_folder$plugin_slug/$plugin_slug.php`
+	if [[ "$plugin_slug" == "wpai-toolset-types-addon" ]]
+		then 
+			v=`sed -n 's/Version: //p' $git_folder$plugin_slug/wpai-toolset-types-add-on.php`
+		else
+			if [ ! -f $git_folder$plugin_slug/$plugin_slug.php ]
+				then	
+					v=`sed -n 's/Version: //p' $git_folder$plugin_slug/plugin.php`
+				else
+					v=`sed -n 's/Version: //p' $git_folder$plugin_slug/$plugin_slug.php`
+			fi
 	fi
 
 	# create a git folder if it doesn't exist
@@ -142,8 +169,8 @@ do
 	# finally we'll actually make the zip (without the hidden folders), adding
 	# the version number to the file name
 
-	zip -rqD $git_folder/\=\ Master\ \=/$plugin_slug.zip $plugin_slug -x '*/\.*'
-	mv $git_folder/\=\ Master\ \=/$plugin_slug.zip $git_folder/\=\ Master\ \=/$plugin_slug\_${v// /_}.zip
+	zip -rqD $git_folder\=" Master "\=/$plugin_slug.zip $plugin_slug -x '*/\.*'
+	mv $git_folder\=" Master "\=/$plugin_slug.zip $git_folder\=" Master "\=/$plugin_slug\_${v// /_}\-\[$branch\].zip
 
 	# and now let's uhide the /tests folder
 	if [ -d "$plugin_slug/.tests/" ]; then
