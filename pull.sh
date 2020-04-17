@@ -18,6 +18,8 @@ plugin_slugs=(
 	"woocommerce-xml-csv-product-import"
 	"wpai-linkcloak-add-on"
 	"sandbox"
+	"wpae-user-add-on-pro"
+	"wpae-user-add-on-free"
 	)
 
 # the user or org username used to run remote git commands.
@@ -26,8 +28,12 @@ github_user=git@github.com:soflyy
 # an array of paths to the local dev installs you use (with trailing slashes).
 # note that for VVV you need to use $HOME rather than ~.
 local_installs=(
-	"/Users/joe/Documents/MAMP PRO/sites/wpai.local/app/public/wp-content/plugins/"
-	"/Users/joe/Documents/MAMP PRO/sites/wpai.test/wp-content/"
+	# "/Users/joe/Documents/MAMP PRO/sites/wpai.local/app/public/wp-content/plugins/"
+	# "/Users/joe/Local Sites/exportaddons/app/public/wp-content/plugins/"
+	# "/Users/joe/Local Sites/user-export-free/app/public/wp-content/plugins/"
+	# "/Users/joe/Local Sites/wooco-customer/app/public/wp-content/plugins/"
+	"/Users/joe/Local Sites/wpai/app/public/wp-content/plugins/"
+	# "/Users/joe/Documents/MAMP PRO/sites/wpai.test/wp-content/"
 	# "$HOME/Dev/Sites/wpae/app/public/wp-content/plugins/"
 	)
 
@@ -110,6 +116,7 @@ do
 	git pull --all
 
 	branch=`git symbolic-ref --short -q HEAD`
+	branch=${branch//[\/]/-}
 
 	# now we're going to move this plugin to each of your local installs
 	for local_install in "${local_installs[@]}"
